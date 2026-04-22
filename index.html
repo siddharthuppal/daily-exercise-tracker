@@ -210,7 +210,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 <div class="stats-row">
   <div class="stat-box"><div class="stat-v" id="stat-done" style="color:var(--purple)">0</div><div class="stat-l">Exercises done</div></div>
   <div class="stat-box"><div class="stat-v" id="stat-sets" style="color:var(--green)">0</div><div class="stat-l">Sets logged</div></div>
-  <div class="stat-box"><div class="stat-v" id="stat-vol" style="color:var(--amber)">0</div><div class="stat-l">Total kg</div></div>
+  <div class="stat-box"><div class="stat-v" id="stat-vol" style="color:var(--amber)">0</div><div class="stat-l">Total lbs</div></div>
 </div>
  
 <div class="workout-progress">
@@ -256,7 +256,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 <div class="mwstats">
   <div class="mwstat"><div class="mwstat-v" id="mw-sessions" style="color:var(--purple)">0</div><div class="mwstat-l">Sessions</div></div>
   <div class="mwstat"><div class="mwstat-v" id="mw-sets" style="color:var(--green)">0</div><div class="mwstat-l">Total sets</div></div>
-  <div class="mwstat"><div class="mwstat-v" id="mw-vol" style="color:var(--amber)">0</div><div class="mwstat-l">Total kg</div></div>
+  <div class="mwstat"><div class="mwstat-v" id="mw-vol" style="color:var(--amber)">0</div><div class="mwstat-l">Total lbs</div></div>
 </div>
 <div class="days-hdr">
   <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
@@ -484,7 +484,7 @@ function renderToday(){
 function buildSetRow(ex, i, s){
   return `<div class="set-row" id="set-row-${ex.id}-${i}">
     <div class="set-num">${i+1}</div>
-    <input type="number" class="set-input${s&&s.done?' done-input':''}" id="weight-${ex.id}-${i}" placeholder="kg" value="${s&&s.weight||''}" min="0" step="0.5" onchange="updateSet('${ex.id}',${i},'weight',this.value)">
+    <input type="number" class="set-input${s&&s.done?' done-input':''}" id="weight-${ex.id}-${i}" placeholder="lbs" value="${s&&s.weight||''}" min="0" step="0.5" onchange="updateSet('${ex.id}',${i},'weight',this.value)">
     <input type="number" class="set-input${s&&s.done?' done-input':''}" id="reps-${ex.id}-${i}" placeholder="${ex.reps}" value="${s&&s.reps||''}" min="0" onchange="updateSet('${ex.id}',${i},'reps',this.value)">
     <div class="set-done-btn${s&&s.done?' logged':''}" id="btn-${ex.id}-${i}" onclick="logSet('${ex.id}',${i},${ex.rest})">${s&&s.done?'Done':'Log'}</div>
   </div>`;
@@ -518,7 +518,7 @@ function renderExercises(plan){
         <div class="ex-expand" id="expand-${ex.id}">›</div>
       </div>
       <div class="ex-body" id="ex-body-${ex.id}">
-        <div class="set-hdr"><span>#</span><span>Weight (kg)</span><span>Reps</span><span></span></div>
+        <div class="set-hdr"><span>#</span><span>Weight (lbs)</span><span>Reps</span><span></span></div>
         <div id="sets-container-${ex.id}">${setsHtml}</div>
         <button onclick="addSet('${ex.id}',${ex.rest},'${ex.reps}')" style="width:100%;margin-top:8px;padding:8px;border-radius:var(--r-sm);border:0.5px dashed var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;">+ Add set</button>
         <div class="ex-cue">${ex.cue}</div>
@@ -697,7 +697,7 @@ async function renderHistory(){
       const sets=(sess.sets[ex.id]||[]).filter(s=>s&&s.done);
       if(!sets.length)return'';
       const best=Math.max(...sets.map(s=>s.weight||0));
-      return`<div class="hist-ex"><span class="hist-ex-name">${ex.name}</span><span class="hist-ex-sets">${sets.length} sets${best?' · '+best+'kg':''}</span></div>`;
+      return`<div class="hist-ex"><span class="hist-ex-name">${ex.name}</span><span class="hist-ex-sets">${sets.length} sets${best?' · '+best+'lbs':''}</span></div>`;
     }).join('');
     const el=document.createElement('div');el.className='hist-day';
     el.innerHTML=`<div class="hist-day-hdr"><div><div class="hist-day-name">${DAYS_FULL[dow]}</div><div class="hist-day-date">${MONTHS_FULL[d.getMonth()]+' '+d.getDate()}</div></div><div class="hist-day-type">${plan.label}</div></div><div class="hist-ex-list">${exItems||'<span style="font-size:12px;color:var(--muted)">Session logged</span>'}</div>`;
