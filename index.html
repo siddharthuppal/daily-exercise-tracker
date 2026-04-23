@@ -29,21 +29,21 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .tabbar button.active{color:var(--purple);border-bottom-color:var(--purple);}
 .page{display:none;padding:16px 16px calc(env(safe-area-inset-bottom)+40px);}
 .page.active{display:block;}
- 
+
 /* Today page */
 .day-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
 .day-hdr-l .day{font-size:24px;font-weight:600;letter-spacing:-0.5px;}
 .day-hdr-l .dt{font-size:12px;color:var(--muted);margin-top:3px;}
 .workout-type-badge{font-size:12px;font-weight:500;padding:7px 13px;border-radius:20px;border:0.5px solid var(--purple-bd);background:var(--purple-bg);color:var(--purple);}
 .rest-badge{border-color:var(--border);background:var(--surface2);color:var(--muted);}
- 
+
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
 .stat-box{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center;}
 .stat-v{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-1px;}
 .stat-l{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-top:3px;}
- 
+
 .sec{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin:14px 0 8px;}
- 
+
 /* Exercise cards */
 .ex-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;transition:border-color 0.2s;}
 .ex-card.done{border-color:var(--green-bd);}
@@ -63,7 +63,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .ex-expand{font-size:18px;color:var(--muted);transition:transform 0.2s;line-height:1;}
 .ex-body{display:none;padding:0 12px 12px;}
 .ex-body.open{display:block;}
- 
+
 /* Set rows */
 .set-hdr{display:grid;grid-template-columns:32px 1fr 1fr 80px;gap:6px;margin-bottom:6px;}
 .set-hdr span{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);text-align:center;}
@@ -77,7 +77,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .set-done-btn.logged{background:var(--green-bg);border-color:var(--green-bd);color:var(--green);}
 .set-done-btn:active{transform:scale(0.97);}
 .ex-cue{font-size:11px;color:var(--muted);line-height:1.5;padding:8px 0 4px;border-top:0.5px solid var(--border);margin-top:4px;}
- 
+
 /* Rest Timer */
 .timer-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,15,0.95);z-index:200;flex-direction:column;align-items:center;justify-content:center;padding:32px;}
 .timer-overlay.show{display:flex;}
@@ -94,13 +94,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .timer-btn{padding:14px 24px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border:0.5px solid var(--border);}
 .timer-btn.skip{background:var(--surface2);color:var(--muted);}
 .timer-btn.plus{background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple);}
- 
+
 /* Progress bar */
 .workout-progress{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;}
 .wp-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px;}
 .wp-track{height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;}
 .wp-fill{height:100%;background:var(--purple);border-radius:3px;transition:width 0.4s ease;}
- 
+
 /* History page */
 .hist-day{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;}
 .hist-day-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
@@ -112,7 +112,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .hist-ex:last-child{border-bottom:none;}
 .hist-ex-name{color:var(--muted);}
 .hist-ex-sets{font-family:'DM Mono',monospace;font-weight:500;color:var(--text);}
- 
+
 /* Plan page */
 .plan-day{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;}
 .plan-day-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
@@ -125,7 +125,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .plan-ex-item:last-child{border-bottom:none;}
 .plan-ex-name{color:var(--text);}
 .plan-ex-sets{font-family:'DM Mono',monospace;color:var(--muted);font-size:12px;}
- 
+
 /* Monthly calendar */
 .cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .cal-hdr .mtitle{font-size:18px;font-weight:600;letter-spacing:-0.3px;}
@@ -152,7 +152,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 </style>
 </head>
 <body>
- 
+
 <!-- Tab bar -->
 <div class="tabbar">
   <button class="active" onclick="showTab('today',this)">Today</button>
@@ -162,7 +162,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <button onclick="showTab('progress',this)">Progress</button>
   <button onclick="showTab('milestones',this)">Milestones</button>
 </div>
- 
+
 <!-- REST TIMER OVERLAY -->
 <div class="timer-overlay" id="timer-overlay">
   <div class="timer-label">Rest timer</div>
@@ -183,7 +183,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <button class="timer-btn plus" onclick="addTime(30)">+30s</button>
   </div>
 </div>
- 
+
 <!-- TODAY PAGE -->
 <div class="page active" id="page-today">
 <div class="day-hdr">
@@ -193,7 +193,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
   <div id="workout-badge" class="workout-type-badge">—</div>
 </div>
- 
+
 <div style="margin-bottom:12px;">
   <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:6px;">Routine</div>
   <select id="routine-select" onchange="switchRoutine(this.value)" style="width:100%;background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 12px;outline:none;cursor:pointer;">
@@ -206,18 +206,18 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <option value="6">Sunday — Rest + Meal Prep</option>
   </select>
 </div>
- 
+
 <div class="stats-row">
   <div class="stat-box"><div class="stat-v" id="stat-done" style="color:var(--purple)">0</div><div class="stat-l">Exercises done</div></div>
   <div class="stat-box"><div class="stat-v" id="stat-sets" style="color:var(--green)">0</div><div class="stat-l">Sets logged</div></div>
   <div class="stat-box"><div class="stat-v" id="stat-vol" style="color:var(--amber)">0</div><div class="stat-l">Total lbs</div></div>
 </div>
- 
+
 <div class="workout-progress">
   <div class="wp-meta"><span id="wp-label">0 of 0 exercises</span><span id="wp-pct" style="color:var(--purple)">0%</span></div>
   <div class="wp-track"><div class="wp-fill" id="wp-fill" style="width:0%"></div></div>
 </div>
- 
+
 <div class="sec" id="exercises-sec">Exercises</div>
 <div id="exercises-container"></div>
 <div id="rest-day-msg" style="display:none;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:20px;text-align:center;">
@@ -225,21 +225,21 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div style="font-size:13px;color:var(--muted);line-height:1.6;">Today is a scheduled rest day. Focus on hitting 8,000 steps and eating clean. Recovery is part of the plan.</div>
 </div>
 </div>
- 
+
 <!-- PLAN PAGE -->
 <div class="page" id="page-plan">
 <div style="font-size:22px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px;">Weekly plan</div>
 <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">5-day dumbbell + bench program</div>
 <div id="plan-container"></div>
 </div>
- 
+
 <!-- HISTORY PAGE -->
 <div class="page" id="page-history">
 <div style="font-size:22px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px;">Workout history</div>
 <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Your recent sessions</div>
 <div id="history-container"><div style="color:var(--muted);font-size:14px;padding:20px 0;">No workouts logged yet.</div></div>
 </div>
- 
+
 <!-- MONTHLY PAGE -->
 <div class="page" id="page-monthly">
 <div class="cal-hdr">
@@ -263,12 +263,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 </div>
 <div class="cgrid" id="cal-grid"></div>
 </div>
- 
+
 <!-- PROGRESS PAGE -->
 <div class="page" id="page-progress">
 <div style="font-size:22px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px;">12-week progression</div>
 <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Siddharth · Starting 35.3% BF · Goal: 20% by Sept 22</div>
- 
+
 <div style="margin-bottom:16px;">
   <div style="font-size:13px;font-weight:600;margin-bottom:10px;">Projected body fat trajectory</div>
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;"><div style="font-size:12px;color:var(--muted);min-width:56px;">Now</div><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:#f87171;border-radius:3px;"></div></div><div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace;color:#f87171;min-width:44px;text-align:right;">35.3%</div></div>
@@ -277,14 +277,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;"><div style="font-size:12px;color:var(--muted);min-width:56px;">Week 12</div><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:65%;height:100%;background:var(--green);border-radius:3px;"></div></div><div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace;color:var(--green);min-width:44px;text-align:right;">25–27%</div></div>
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;"><div style="font-size:12px;color:var(--muted);min-width:56px;">Sept 22</div><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;"><div style="width:53%;height:100%;background:var(--blue);border-radius:3px;"></div></div><div style="font-size:12px;font-weight:500;font-family:'DM Mono',monospace;color:var(--blue);min-width:44px;text-align:right;">~20%</div></div>
 </div>
- 
+
 <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;">
   <div style="font-size:13px;font-weight:600;margin-bottom:10px;">Three phases at a glance</div>
   <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;"><div style="background:var(--green-bg);color:var(--green);font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;">Wk 1–4</div><div style="font-size:13px;line-height:1.5;">Foundation — learn movements, build habit, diet is the primary fat burner</div></div>
   <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;"><div style="background:var(--purple-bg);color:var(--purple);font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;">Wk 5–8</div><div style="font-size:13px;line-height:1.5;">Progression — increase intensity, add weights to legs, upgrade cardio</div></div>
   <div style="display:flex;gap:10px;align-items:flex-start;"><div style="background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;">Wk 9–12</div><div style="font-size:13px;line-height:1.5;">Intensity — heavier weights, full HIIT, progressive overload on everything</div></div>
 </div>
- 
+
 <div style="background:var(--green-bg);border-left:3px solid var(--green);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:10px 12px;font-size:13px;color:var(--green);line-height:1.6;margin-bottom:8px;">
   The plan gets harder every 4 weeks — not every day. Consistency at a manageable level beats intensity that leads to burnout.
 </div>
@@ -292,48 +292,48 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   Book your second DEXA scan at week 12–14. Real data will tell you exactly how the plan is working and what to adjust for the final push.
 </div>
 </div>
- 
+
 <!-- MILESTONES PAGE -->
 <div class="page" id="page-milestones">
 <div style="font-size:22px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px;">Key milestones</div>
 <div style="font-size:12px;color:var(--muted);margin-bottom:16px;">Signs the plan is working — what to expect and when</div>
- 
+
 <div style="background:var(--green-bg);border:0.5px solid var(--green-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--green);line-height:1;min-width:44px;">2<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px;">First visible changes</div><div style="font-size:12px;color:var(--green);line-height:1.6;opacity:0.85;">Scale drops 2–4 lbs — mostly water weight. Waist may feel slightly less bloated. Energy starts improving.</div></div>
 </div>
- 
+
 <div style="background:var(--purple-bg);border:0.5px solid var(--purple-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--purple);line-height:1;min-width:44px;">4<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--purple);margin-bottom:4px;">Habit formed</div><div style="font-size:12px;color:var(--purple);line-height:1.6;opacity:0.85;">Workouts feel familiar. Diet is automatic. 3–5 lbs of real fat lost. Clothes fitting slightly looser.</div></div>
 </div>
- 
+
 <div style="background:var(--amber-bg);border:0.5px solid var(--amber-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--amber);line-height:1;min-width:44px;">6<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--amber);margin-bottom:4px;">Visible waist reduction</div><div style="font-size:12px;color:var(--amber);line-height:1.6;opacity:0.85;">Android fat dropping noticeably. Belt needs tightening. Strength noticeably up on push and pull days.</div></div>
 </div>
- 
+
 <div style="background:var(--blue-bg);border:0.5px solid var(--blue-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--blue);line-height:1;min-width:44px;">8<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--blue);margin-bottom:4px;">Body composition shift</div><div style="font-size:12px;color:var(--blue);line-height:1.6;opacity:0.85;">~29–30% body fat. Muscle definition in arms and shoulders. 8–10 lbs of fat lost. People will start noticing.</div></div>
 </div>
- 
+
 <div style="background:var(--green-bg);border:0.5px solid var(--green-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--green);line-height:1;min-width:44px;">12<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--green);margin-bottom:4px;">Second DEXA scan</div><div style="font-size:12px;color:var(--green);line-height:1.6;opacity:0.85;">~25–27% body fat. Book your scan here to measure real progress and recalibrate for the final 10 weeks.</div></div>
 </div>
- 
+
 <div style="background:var(--purple-bg);border:0.5px solid var(--purple-bd);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;">
   <div style="font-size:26px;font-weight:600;font-family:'DM Mono',monospace;color:var(--purple);line-height:1;min-width:44px;">22<div style="font-size:10px;font-weight:400;opacity:0.7;margin-top:2px;">weeks</div></div>
   <div><div style="font-size:14px;font-weight:600;color:var(--purple);margin-bottom:4px;">September 22 — Birthday goal</div><div style="font-size:12px;color:var(--purple);line-height:1.6;opacity:0.85;">Target: ~20% body fat. Lean, strong, and a completely transformed body composition from where you started.</div></div>
 </div>
 </div>
- 
+
 <script>
 const DAYS_FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS_FULL=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const SHORT_DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
- 
+
 const PLAN=[
   {day:'Monday',type:'strength',label:'Push',color:'purple',warmupNote:'Arm circles (10 forward, 10 backward) + shoulder rolls + 10 slow bodyweight push-ups before starting.',exercises:[
     {id:'bench',name:'DB flat bench press',sets:4,reps:'10',rest:90,cue:'Lower DBs to chest, press up — don\'t lock elbows at top. Keep shoulder blades squeezed together.'},
@@ -405,31 +405,31 @@ const PLAN=[
   ]},
   {day:'Sunday',type:'rest',label:'Rest + Meal Prep',color:'rest',exercises:[]},
 ];
- 
+
 function todayKey(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 function dateToKey(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
- 
+
 let db=null;
 let timerInterval=null,timerSeconds=0,timerTotal=0;
 let calVM={y:new Date().getFullYear(),m:new Date().getMonth()+1};
- 
+
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('WorkoutLogDB',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('sessions',{keyPath:'date'});r.onsuccess=e=>{db=e.target.result;res();};r.onerror=()=>rej();});}
 function getSession(k){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').get(k);r.onsuccess=()=>res(r.result||null);r.onerror=()=>res(null);});}
 function saveSession(k,d){return new Promise(res=>{const tx=db.transaction('sessions','readwrite');tx.objectStore('sessions').put({date:k,...d});tx.oncomplete=res;tx.onerror=res;});}
 function getAllSessions(){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>res([]);});}
- 
+
 function getTodayPlanIndex(){
   const dow=new Date().getDay();
   const map={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
   return map[dow];
 }
- 
+
 function getTodayPlan(){
   return PLAN[getTodayPlanIndex()];
 }
- 
+
 let activePlanIndex=null;
- 
+
 function switchRoutine(idx){
   activePlanIndex=parseInt(idx);
   const plan=PLAN[activePlanIndex];
@@ -451,7 +451,7 @@ function switchRoutine(idx){
   }
   updateStats(plan);
 }
- 
+
 function showTab(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tabbar button').forEach(b=>b.classList.remove('active'));
@@ -461,9 +461,9 @@ function showTab(name,btn){
   if(name==='monthly')renderMonthly();
   if(name==='plan')renderPlan();
 }
- 
+
 let todaySession={sets:{}};
- 
+
 async function init(){
   await openDB();
   const saved=await getSession(todayKey());
@@ -471,7 +471,7 @@ async function init(){
   else todaySession={date:todayKey(),sets:{}};
   renderToday();
 }
- 
+
 function renderToday(){
   const now=new Date();
   document.getElementById('today-day').textContent=DAYS_FULL[now.getDay()];
@@ -480,7 +480,7 @@ function renderToday(){
   document.getElementById('routine-select').value=activePlanIndex;
   switchRoutine(activePlanIndex);
 }
- 
+
 function buildSetRow(ex, i, s){
   return `<div class="set-row" id="set-row-${ex.id}-${i}">
     <div class="set-num">${i+1}</div>
@@ -489,7 +489,7 @@ function buildSetRow(ex, i, s){
     <div class="set-done-btn${s&&s.done?' logged':''}" id="btn-${ex.id}-${i}" onclick="logSet('${ex.id}',${i},${ex.rest})">${s&&s.done?'Done':'Log'}</div>
   </div>`;
 }
- 
+
 function renderExercises(plan){
   const c=document.getElementById('exercises-container');c.innerHTML='';
   if(plan.warmupNote){
@@ -532,7 +532,7 @@ function renderExercises(plan){
     c.appendChild(note);
   }
 }
- 
+
 function addSet(exId, restTime, defaultReps){
   if(!todaySession.sets[exId])todaySession.sets[exId]=[];
   const newIdx=todaySession.sets[exId].length;
@@ -545,7 +545,7 @@ function addSet(exId, restTime, defaultReps){
   container.appendChild(newRow.firstElementChild);
   saveSession(todayKey(),todaySession);
 }
- 
+
 function toggleEx(id){
   const body=document.getElementById('ex-body-'+id);
   const arrow=document.getElementById('expand-'+id);
@@ -553,27 +553,27 @@ function toggleEx(id){
   body.classList.toggle('open',!isOpen);
   arrow.style.transform=isOpen?'':'rotate(90deg)';
 }
- 
+
 function getPrevWeight(exId,setIdx){
   return null;
 }
- 
+
 async function updateSet(exId,setIdx,field,val){
   if(!todaySession.sets[exId])todaySession.sets[exId]=[];
   if(!todaySession.sets[exId][setIdx])todaySession.sets[exId][setIdx]={done:false};
   todaySession.sets[exId][setIdx][field]=parseFloat(val)||val;
   await saveSession(todayKey(),todaySession);
 }
- 
+
 async function logSet(exId,setIdx,restTime){
   if(!todaySession.sets[exId])todaySession.sets[exId]=[];
   if(!todaySession.sets[exId][setIdx])todaySession.sets[exId][setIdx]={};
- 
+
   const wEl=document.getElementById('weight-'+exId+'-'+setIdx);
   const rEl=document.getElementById('reps-'+exId+'-'+setIdx);
   const btn=document.getElementById('btn-'+exId+'-'+setIdx);
   const alreadyDone=todaySession.sets[exId][setIdx].done;
- 
+
   if(alreadyDone){
     // Undo — toggle back to undone
     todaySession.sets[exId][setIdx].done=false;
@@ -594,7 +594,7 @@ async function logSet(exId,setIdx,restTime){
       startTimer(restTime,ex.name,setIdx+1);
     }
   }
- 
+
   const plan=PLAN[activePlanIndex];
   const ex=plan.exercises.find(e=>e.id===exId);
   const sets=todaySession.sets[exId]||[];
@@ -606,7 +606,7 @@ async function logSet(exId,setIdx,restTime){
   if(badge)badge.textContent=doneSets+'/'+ex.sets;
   updateStats(plan);
 }
- 
+
 function updateStats(plan){
   if(plan.type==='rest'){
     document.getElementById('stat-done').textContent='—';
@@ -633,7 +633,7 @@ function updateStats(plan){
   document.getElementById('wp-pct').textContent=pct+'%';
   document.getElementById('wp-fill').style.width=pct+'%';
 }
- 
+
 function startTimer(secs,exName,setNum){
   stopTimer();
   timerSeconds=secs;timerTotal=secs;
@@ -647,7 +647,7 @@ function startTimer(secs,exName,setNum){
     if(timerSeconds<=0){stopTimer();}
   },1000);
 }
- 
+
 function updateTimerDisplay(){
   document.getElementById('timer-num').textContent=Math.max(0,timerSeconds);
   const circumference=591;
@@ -656,14 +656,14 @@ function updateTimerDisplay(){
   const el=document.getElementById('timer-num');
   el.style.color=timerSeconds<=10?'var(--red)':timerSeconds<=30?'var(--amber)':'var(--text)';
 }
- 
+
 function stopTimer(){
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('timer-overlay').classList.remove('show');
 }
- 
+
 function addTime(s){timerSeconds+=s;timerTotal+=s;updateTimerDisplay();}
- 
+
 function renderPlan(){
   const c=document.getElementById('plan-container');c.innerHTML='';
   PLAN.forEach(day=>{
@@ -674,7 +674,7 @@ function renderPlan(){
     c.appendChild(el);
   });
 }
- 
+
 async function renderHistory(){
   const all=await getAllSessions();
   const sorted=all.sort((a,b)=>b.date.localeCompare(a.date)).slice(0,20);
@@ -705,7 +705,7 @@ async function renderHistory(){
   });
   if(!c.children.length)c.innerHTML='<div style="color:var(--muted);font-size:14px;padding:20px 0;">No workouts logged yet.</div>';
 }
- 
+
 async function renderMonthly(){
   const all=await getAllSessions();
   const map={};all.forEach(s=>map[s.date]=s);
@@ -756,14 +756,14 @@ async function renderMonthly(){
   document.getElementById('w-streak-num').textContent=streak;
   document.getElementById('w-streak-sub').textContent=streak===0?'Log your first workout!':streak<7?streak+' day'+(streak>1?'s':'')+' strong — keep going!':streak<30?'Great consistency — '+streak+' days!':'Incredible — '+streak+' days!';
 }
- 
+
 function changeCalMonth(dir){
   calVM.m+=dir;
   if(calVM.m>12){calVM.m=1;calVM.y++;}
   if(calVM.m<1){calVM.m=12;calVM.y--;}
   renderMonthly();
 }
- 
+
 init();
 </script>
 </body>
