@@ -1,0 +1,14 @@
+{
+  "name": "Workout Tracker",
+  "short_name": "Workout",
+  "description": "Push, Pull, Legs, Abs — track every session",
+  "display": "standalone",
+  "background_color": "#060d16",
+  "theme_color": "#060d16",
+  "start_url": ".",
+  "scope": ".",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Workout">
 <meta name="theme-color" content="#060d16">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
 <title>Workout Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -23,9 +25,9 @@
   --coral:#ff6b35;--coral-bg:rgba(255,107,53,0.1);--coral-bd:rgba(255,107,53,0.3);
   --r:14px;--r-sm:10px;
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html{background:var(--bg);overflow-x:hidden;}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);max-width:440px;margin:0 auto;min-height:100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html{background:var(--bg);overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);max-width:440px;margin:0 auto;min-height:100svh;overflow-x:hidden;-webkit-overflow-scrolling:touch;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overscroll-behavior-y:none;}
 
 /* Tabbar */
 .tabbar{display:flex;background:var(--surface);border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;padding-top:env(safe-area-inset-top);overflow-x:auto;}
