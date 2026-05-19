@@ -1009,6 +1009,7 @@ async function renderStrength(){
   filtered.forEach(([id,points])=>{
     if(points.length<1)return;
     const name=exName[id]||id;
+    const safeId=id.replace(/[^a-zA-Z0-9_-]/g,'_');
     const latest=points[points.length-1].maxWeight;
     const first=points[0].maxWeight;
     const gain=latest-first;
@@ -1017,7 +1018,10 @@ async function renderStrength(){
     wrap.className='sc-wrap';
 
     const gainTxt=gain>0?`+${gain} lbs since first session`:gain<0?`${gain} lbs`:points.length===1?'First session':' No change';
-    wrap.innerHTML=`<div class="sc-title">${name}</div><div class="sc-meta">${latest} lbs best · <span style="color:${gain>=0?'var(--green)':'var(--red)'}">${gainTxt}</span></div>`;
+    const titleEl=document.createElement('div');titleEl.className='sc-title';titleEl.textContent=name;
+    const metaEl=document.createElement('div');metaEl.className='sc-meta';
+    metaEl.innerHTML=`${latest} lbs best · <span style="color:${gain>=0?'var(--green)':'var(--red)'}">${gainTxt}</span>`;
+    wrap.appendChild(titleEl);wrap.appendChild(metaEl);
 
     if(points.length===1){
       wrap.innerHTML+=`<div class="sc-no-data">Only one session logged — come back after more workouts to see the chart.</div>`;
@@ -1047,8 +1051,8 @@ async function renderStrength(){
       const dots=points.map((p,i)=>`<circle cx="${toX(i).toFixed(1)}" cy="${toY(p.maxWeight).toFixed(1)}" r="3" fill="var(--gold)" stroke="var(--bg)" stroke-width="1.5"/>`).join('');
 
       wrap.innerHTML+=`<svg class="sc-svg" viewBox="0 0 ${W} ${H}" style="height:${H}px;">
-        <defs><linearGradient id="grad-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--gold)" stop-opacity="0.25"/><stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/></linearGradient></defs>
-        <path d="${areaD}" fill="url(#grad-${id})"/>
+        <defs><linearGradient id="grad-${safeId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--gold)" stop-opacity="0.25"/><stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/></linearGradient></defs>
+        <path d="${areaD}" fill="url(#grad-${safeId})"/>
         <path d="${pathD}" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
         ${dots}${xLabels}${yLabels}
       </svg>`;
