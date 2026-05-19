@@ -1,0 +1,9 @@
+window.WORKOUT_TRACKER_FIREBASE_CONFIG={
+  apiKey:'AIzaSyDx1XrX23z1N_88yasaxtOEl-kL830udAs',
+  authDomain:'daily-exercise-tracker-331bb.firebaseapp.com',
+  projectId:'daily-exercise-tracker-331bb',
+  storageBucket:'daily-exercise-tracker-331bb.firebasestorage.app',
+  messagingSenderId:'735619081515',
+  appId:'1:735619081515:web:87d4f93417a54d8791116e',
+  appUserId:'siddharth',
+};
