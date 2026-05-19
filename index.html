@@ -11,6 +11,7 @@
 <link rel="apple-touch-icon" href="icon.png">
 <title>Workout Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="firebase-config.js"></script>
 <style>
 :root{
   --bg:#060d16;--surface:#0d1b2a;--surface2:#142032;--border:rgba(0,200,255,0.1);
@@ -51,6 +52,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .moto::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);}
 .moto-text{font-family:'Syne',sans-serif;font-size:18px;letter-spacing:1px;color:var(--cyan);line-height:1.2;margin-bottom:3px;}
 .moto-sub{font-size:11px;color:var(--muted);line-height:1.4;}
+.sync-chip{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 10px;border-radius:999px;border:0.5px solid var(--amber-bd);background:var(--amber-bg);color:var(--amber);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+.sync-chip.online{color:var(--green);border-color:var(--green-bd);background:var(--green-bg);}
+.sync-chip.error{color:var(--amber);border-color:var(--amber-bd);background:var(--amber-bg);}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:0.9;}
 
 /* Routine selector */
 .routine-wrap{padding:0 16px;margin-bottom:12px;}
@@ -248,6 +253,7 @@ select#routine-select{width:100%;background:var(--surface2);border:0.5px solid v
   <div class="moto" style="background:var(--purple-bg);border:0.5px solid var(--purple-bd);">
     <div class="moto-text" id="moto-text">SHOW UP. EVERY. SINGLE. DAY.</div>
     <div class="moto-sub" id="moto-sub">Your body transforms in the consistency, not the intensity</div>
+    <div class="sync-chip" id="sync-chip"><span class="sync-dot"></span><span id="sync-label">Local only</span></div>
   </div>
 </div>
 
@@ -407,7 +413,10 @@ select#routine-select{width:100%;background:var(--surface2);border:0.5px solid v
 .flt-btn.active{background:var(--gold-bg);border-color:var(--gold-bd);color:var(--gold);}
 </style>
 
-<script>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js';
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc } from 'https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js';
+
 const MOTTOS=[
   {text:'THE BODY ACHIEVES WHAT THE MIND BELIEVES.',sub:'You showed up. That\'s already more than most people did today.'},
   {text:'35.3% → 26%. THE CLOCK IS TICKING.',sub:'Every session is a debt paid to your September self.'},
@@ -470,13 +479,128 @@ function todayKey(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+
 function dateToKey(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 
 let db=null;
+let firestoreDb=null;
+let firestoreEnabled=false;
+let firestoreUserId='';
+let allSessionsCache=[];
 
 let calVM={y:new Date().getFullYear(),m:new Date().getMonth()+1};
 
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open('WorkoutLogDB',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('sessions',{keyPath:'date'});r.onsuccess=e=>{db=e.target.result;res();};r.onerror=()=>rej();});}
-function getSession(k){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').get(k);r.onsuccess=()=>res(r.result||null);r.onerror=()=>res(null);});}
-function saveSession(k,d){return new Promise(res=>{const tx=db.transaction('sessions','readwrite');tx.objectStore('sessions').put({date:k,...d});tx.oncomplete=res;tx.onerror=res;});}
-function getAllSessions(){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>res([]);});}
+function getLocalSession(k){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').get(k);r.onsuccess=()=>res(r.result||null);r.onerror=()=>res(null);});}
+function saveLocalSession(k,d){return new Promise(res=>{const tx=db.transaction('sessions','readwrite');tx.objectStore('sessions').put({date:k,...d});tx.oncomplete=res;tx.onerror=res;});}
+function getAllLocalSessions(){return new Promise(res=>{const r=db.transaction('sessions','readonly').objectStore('sessions').getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>res([]);});}
+
+function normalizeSession(dateKey,data){
+  return {date:dateKey,sets:data?.sets||{},planIdx:data?.planIdx??0};
+}
+
+function isFirebaseReady(config){
+  return Boolean(config&&config.apiKey&&config.authDomain&&config.projectId&&config.appId&&config.appUserId);
+}
+
+function setSyncState(mode,label){
+  const chip=document.getElementById('sync-chip');
+  const text=document.getElementById('sync-label');
+  if(!chip||!text)return;
+  chip.classList.toggle('online',mode==='online');
+  chip.classList.toggle('error',mode==='error');
+  text.textContent=label;
+}
+
+async function initFirebase(){
+  const config=window.WORKOUT_TRACKER_FIREBASE_CONFIG;
+  if(!isFirebaseReady(config)){
+    setSyncState('local','Local only');
+    return;
+  }
+  try{
+    const app=initializeApp({
+      apiKey:config.apiKey,
+      authDomain:config.authDomain,
+      projectId:config.projectId,
+      storageBucket:config.storageBucket,
+      messagingSenderId:config.messagingSenderId,
+      appId:config.appId,
+    });
+    firestoreDb=getFirestore(app);
+    firestoreUserId=config.appUserId;
+    firestoreEnabled=true;
+    setSyncState('online','Cloud sync active');
+  }catch(err){
+    console.error('Firebase init failed',err);
+    setSyncState('error','Cloud sync unavailable');
+  }
+}
+
+function getSessionDocRef(dateKey){
+  return doc(collection(firestoreDb,'users',firestoreUserId,'sessions'),dateKey);
+}
+
+async function loadRemoteSessions(){
+  if(!firestoreEnabled)return [];
+  const snap=await getDocs(collection(firestoreDb,'users',firestoreUserId,'sessions'));
+  return snap.docs.map(item=>normalizeSession(item.id,item.data()));
+}
+
+async function hydrateCacheFromFirestore(){
+  const local=await getAllLocalSessions();
+  if(!firestoreEnabled){
+    allSessionsCache=local;
+    return;
+  }
+  try{
+    const remote=await loadRemoteSessions();
+    const mergedMap=new Map(remote.map(sess=>[sess.date,sess]));
+    local.forEach(sess=>mergedMap.set(sess.date,normalizeSession(sess.date,sess)));
+    allSessionsCache=Array.from(mergedMap.values());
+    await Promise.all(allSessionsCache.map(sess=>saveLocalSession(sess.date,sess)));
+    await Promise.all(allSessionsCache.map(sess=>setDoc(getSessionDocRef(sess.date),{date:sess.date,sets:sess.sets,planIdx:sess.planIdx},{merge:true})));
+    setSyncState('online','Cloud sync active');
+  }catch(err){
+    console.error('Firestore read failed, using local cache',err);
+    setSyncState('error','Using local cache');
+    allSessionsCache=local;
+  }
+}
+
+async function getSession(k){
+  const local=await getLocalSession(k);
+  if(local)return local;
+  if(!firestoreEnabled)return null;
+  try{
+    const snap=await getDoc(getSessionDocRef(k));
+    if(!snap.exists())return null;
+    const session=normalizeSession(k,snap.data());
+    await saveLocalSession(k,session);
+    return session;
+  }catch(err){
+    console.error('Firestore session read failed',err);
+    return null;
+  }
+}
+
+async function saveSession(k,d){
+  const normalized=normalizeSession(k,d);
+  await saveLocalSession(k,normalized);
+  const idx=allSessionsCache.findIndex(sess=>sess.date===k);
+  if(idx>=0)allSessionsCache[idx]=normalized;
+  else allSessionsCache.push(normalized);
+  if(!firestoreEnabled)return;
+  try{
+    await setDoc(getSessionDocRef(k),{date:normalized.date,sets:normalized.sets,planIdx:normalized.planIdx},{merge:true});
+    setSyncState('online','Cloud sync active');
+  }catch(err){
+    console.error('Firestore session write failed',err);
+    setSyncState('error','Sync pending locally');
+  }
+}
+
+async function getAllSessions(){
+  if(allSessionsCache.length)return [...allSessionsCache];
+  allSessionsCache=await getAllLocalSessions();
+  return [...allSessionsCache];
+}
 
 let activePlanIndex=0;
 
@@ -520,6 +644,8 @@ let todaySession={sets:{}};
 
 async function init(){
   await openDB();
+  await initFirebase();
+  await hydrateCacheFromFirestore();
   const saved=await getSession(todayKey());
   if(saved)todaySession=saved;
   else todaySession={date:todayKey(),sets:{},planIdx:0};
@@ -895,6 +1021,14 @@ async function renderStrength(){
 }
 
 init();
+
+window.showTab=showTab;
+window.switchRoutine=switchRoutine;
+window.toggleEx=toggleEx;
+window.updateSet=updateSet;
+window.logSet=logSet;
+window.addSet=addSet;
+window.changeCalMonth=changeCalMonth;
 </script>
 </body>
 </html>
